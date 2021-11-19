@@ -8,10 +8,10 @@ import java.nio.ShortBuffer;
 import javax.microedition.khronos.opengles.GL10;
 
 public class Square {
-	private float vertices[] = {-0.5f, -0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f,
-			0.5f,  0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f};
+	private float vertices[] = {-1.0f, -1.0f, 0.0f, //lower left
+			-1.0f,  1.0f, 0.0f, //upper left
+			1.0f,  1.0f, 0.0f, //upper right
+			1.0f, -1.0f, 0.0f}; //lower right
 	private short faces[] = { 0, 1, 2, 0, 2, 3 };
 
 	// Our vertex buffer.
@@ -23,10 +23,12 @@ public class Square {
 	// Our color buffer.
 	private FloatBuffer colorBuffer;
 
-	// Our texture buffer.
-	private FloatBuffer textureBuffer;
+	// Our texCoord buffer.
+	private FloatBuffer texCoordBuffer;
 
 	private Texture texture;
+
+	private Animation animation;
 
 
 	private boolean colorEnabled = false;
@@ -48,10 +50,11 @@ public class Square {
 		indexBuffer.position(0);
 	}
 
-	public void setColor(float r, float g, float b) {
-	}
+	//public void setColor(float r, float g, float b) {
+	//}
 
 	public void setColor(float []colors) {
+		//Move the color list into a buffer
 		ByteBuffer vbb = ByteBuffer.allocateDirect(colors.length * 4);
 		vbb.order(ByteOrder.nativeOrder());
 		colorBuffer = vbb.asFloatBuffer();
@@ -72,11 +75,24 @@ public class Square {
 
 		ByteBuffer vbb = ByteBuffer.allocateDirect(textcoords.length * 4);
 		vbb.order(ByteOrder.nativeOrder());
-		textureBuffer = vbb.asFloatBuffer();
-		textureBuffer.put(textcoords);
-		textureBuffer.position(0);
+		texCoordBuffer = vbb.asFloatBuffer();
+		texCoordBuffer.put(textcoords);
+		texCoordBuffer.position(0);
 
 		textureEnabled = true;
+	}
+
+	public void setAnimation(Animation animation) {
+
+		this.animation = animation;
+		this.setTexture(this.animation.getCurrentFrame(), this.animation.getTexture());
+	}
+
+	public void update(long t){
+		if (animation!=null) {
+			animation.update(t);
+			this.setTexture(animation.getCurrentFrame(), animation.getTexture());
+		}
 	}
 
 	public void draw(GL10 gl) {
@@ -99,19 +115,17 @@ public class Square {
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 
 		if (colorEnabled) {
-			gl.glColorPointer(3,GL10.GL_FLOAT,0,colorBuffer);
+			gl.glColorPointer(4,GL10.GL_FLOAT,0,colorBuffer);
 		}
 
 		if (textureEnabled) {
-			gl.glTexCoordPointer(2,GL10.GL_FLOAT,0,textureBuffer);
+			gl.glTexCoordPointer(2,GL10.GL_FLOAT,0,texCoordBuffer);
 			gl.glBindTexture(GL10.GL_TEXTURE_2D,texture.getTexture()[0]);
 		}
 
 		gl.glDrawElements(GL10.GL_TRIANGLES, faces.length,
 				GL10.GL_UNSIGNED_SHORT, indexBuffer);
 
-		// Disable the vertices buffer.
-		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 
 		if (colorEnabled) {
 			gl.glDisableClientState(GL10.GL_COLOR_ARRAY);
@@ -120,5 +134,12 @@ public class Square {
 		if (textureEnabled) {
 			gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 		}
+
+		// Disable the vertices buffer.
+		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+	}
+
+	public Animation getAnimation() {
+		return animation;
 	}
 }
