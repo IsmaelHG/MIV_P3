@@ -152,10 +152,11 @@ public class TileMap {
             }
             gl.glPopMatrix();
         }
-        if (secondary_drawer_displacement<-scx*lineSize*2) secondary_drawer_displacement=1;
+        //if (secondary_drawer_displacement<-scx*lineSize*2) secondary_drawer_displacement=1;
+        //if (secondary_drawer_displacement>(scx*lineSize*2)) secondary_drawer_displacement=1;
     }
 
-    private float base_displacement = 0.0025f;
+    private float base_displacement = 0.0f;
 
     public void update(double ctime, boolean touches){
 
@@ -183,12 +184,20 @@ public class TileMap {
                 if (secondary_drawer_displacement<0) secondary_drawer_displacement = secondary_drawer_displacement - displacement_rate;
             }
 
-            //System.out.println("displaced "+paralaxDisplacement);
-            if (paralaxDisplacement <= (-(scx*lineSize*2f)+2f+scx)) {
-
+            if ((paralaxDisplacement <= (-(scx*lineSize*2f)+2f+scx))) {
+                System.out.println("TRIGGER! "+paralaxDisplacement);
+                System.out.println(" "+(-(scx*lineSize*2f)+2f+scx));
+                System.out.println(" "+(-scx*lineSize*2f+2f+scx));
                 secondary_drawer_displacement = -scx*lineSize*2f+2f+scx;
                 paralaxDisplacement = 2f+scx;
             }
+            if (paralaxDisplacement > 99) {
+                System.out.println("TRIGGER 2! "+paralaxDisplacement);
+                System.out.println(" "+((scx*lineSize*2f)+2f+scx));
+                secondary_drawer_displacement = 0;
+                paralaxDisplacement = 0;
+            }
+            if (lineSize == 9) System.out.println("displaced "+paralaxDisplacement);
         }
 
     }

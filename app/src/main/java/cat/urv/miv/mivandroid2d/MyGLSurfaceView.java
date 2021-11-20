@@ -6,9 +6,11 @@ import android.view.MotionEvent;
 
 public class MyGLSurfaceView extends GLSurfaceView {
     private MyOpenGLRenderer mRenderer;
+    private int x_res;
 
     public MyGLSurfaceView(Context context) {
         super(context);
+        this.x_res = this.getResources().getDisplayMetrics().widthPixels;
     }
 
     @Override
@@ -22,12 +24,12 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     queueEvent(new Runnable() {
                         @Override
                         public void run() {
-
-                            System.out.println("Touched!");
                             int x = (int)event.getX();
-                            int y = (int)event.getY();
-                            System.out.printf("Position x: "+x);
-                            System.out.printf("Position y: "+y);
+                            if (x > x_res/2) {
+                                StateManager.displaceRight();
+                            } else {
+                                StateManager.displaceLeft();
+                            }
                             StateManager.incrementTouches();
                         }
                     });
