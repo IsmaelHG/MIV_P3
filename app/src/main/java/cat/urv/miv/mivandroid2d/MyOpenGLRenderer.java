@@ -39,6 +39,7 @@ public class MyOpenGLRenderer implements Renderer {
 		mario_square = new Square();
 		mario_character = new AnimationManager(gl, context, R.drawable.mario, R.raw.mario);
 		mario_square.setAnimation(mario_character.getAnimation("walk"));
+		mario_square.getAnimation().activate_touches();
 
 		// Background
 		tm1 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap1, 300/speed_scalation);

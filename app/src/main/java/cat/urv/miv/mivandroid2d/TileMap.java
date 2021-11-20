@@ -183,7 +183,7 @@ public class TileMap {
                 if (secondary_drawer_displacement<0) secondary_drawer_displacement = secondary_drawer_displacement - displacement_rate;
             }
 
-            System.out.println("displaced "+paralaxDisplacement);
+            //System.out.println("displaced "+paralaxDisplacement);
             if (paralaxDisplacement <= (-(scx*lineSize*2f)+2f+scx)) {
 
                 secondary_drawer_displacement = -scx*lineSize*2f+2f+scx;

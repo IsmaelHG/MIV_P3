@@ -22,7 +22,7 @@ public class StateManager {
         else {
             //Progressive slow down
             displacement -= 0.00005;
-            if (displacement<0) displacement = 0;
+            //if (displacement<0) displacement = 0;
         }
         //System.out.println("displacement after: "+displacement);
     }
