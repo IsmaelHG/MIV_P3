@@ -73,6 +73,7 @@ public class SimpleHUD {
         String touch_string = "TOUCHES: "+(int)StateManager.getTotal_touches();
         font_atlas2.drawString(touch_string, 0.035f, 0.035f);
         gl.glTranslatef(0, -0.15f, 0);
+        font_atlas3.drawString("DISTANCE: X", 0.035f, 0.035f);
 
         gl.glPopMatrix();
     }
