@@ -38,7 +38,7 @@ public class MyOpenGLRenderer implements Renderer {
 
 		mario_square = new Square();
 		mario_character = new AnimationManager(gl, context, R.drawable.mario, R.raw.mario);
-		mario_square.setAnimation(mario_character.getAnimation("walk"));
+		mario_square.setAnimation(mario_character.getAnimation("idle"));
 		mario_square.getAnimation().activate_touches();
 
 		// Background
@@ -52,7 +52,7 @@ public class MyOpenGLRenderer implements Renderer {
 
 	@Override
 	public void onDrawFrame(GL10 gl) {
-		StateManager.update_touches();
+		StateManager.update_touches(mario_square, mario_character);
 		
 		// Clears the screen and depth buffer.
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);

@@ -11,7 +11,7 @@ public class StateManager {
     private static boolean touch_left = false;
     private static boolean touch_right = false;
 
-    public static void update_touches(){
+    public static void update_touches(Square character, AnimationManager character_animation){
         float t = System.nanoTime();
         //System.out.println(t);
         //System.out.println("displacement before: "+displacement);
@@ -38,20 +38,22 @@ public class StateManager {
             //System.out.println("Got "+rt);
             if (touch_left) {
                 displacement = -rt;
+                character.setAnimation(character_animation.getAnimation("walk"));
             }
             if (touch_right) {
                 displacement = rt;
+                character.setAnimation(character_animation.getAnimation("walk"));
             }
         }
         else {
             //Progressive slow down
             if (touch_left) {
                 displacement += 0.00005;
-                if (displacement>0) displacement = 0;
+                if (displacement>0) {displacement = 0; character.setAnimation(character_animation.getAnimation("idle"));}
             }
             if (touch_right) {
                 displacement -= 0.00005;
-                if (displacement<0) displacement = 0;
+                if (displacement<0) {displacement = 0; character.setAnimation(character_animation.getAnimation("idle"));}
             }
         }
     }

@@ -137,21 +137,19 @@ public class TileMap {
             gl.glTranslatef(0,-2,0);
         }
         gl.glPopMatrix();
-        if (secondary_drawer_displacement<0) {
+        gl.glPushMatrix();
+        gl.glTranslatef(displx+secondary_drawer_displacement,disply,z);
+        gl.glScalef(scx, scy, 0);
+        for (int i=0; i<lineNumber; i++){
             gl.glPushMatrix();
-            gl.glTranslatef(displx+secondary_drawer_displacement,disply,z);
-            gl.glScalef(scx, scy, 0);
-            for (int i=0; i<lineNumber; i++){
-                gl.glPushMatrix();
-                for (int j = 0; j<lineSize; j++){
-                    tilemap[i][j].draw(gl);
-                    gl.glTranslatef(2, 0, 0) ;
-                }
-                gl.glPopMatrix();
-                gl.glTranslatef(0,-2,0);
+            for (int j = 0; j<lineSize; j++){
+                tilemap[i][j].draw(gl);
+                gl.glTranslatef(2, 0, 0) ;
             }
             gl.glPopMatrix();
+            gl.glTranslatef(0,-2,0);
         }
+        gl.glPopMatrix();
         //if (secondary_drawer_displacement<-scx*lineSize*2) secondary_drawer_displacement=1;
         //if (secondary_drawer_displacement>(scx*lineSize*2)) secondary_drawer_displacement=1;
     }
@@ -175,26 +173,25 @@ public class TileMap {
                 float displacement_rate = base_displacement + displacement*50/(float)speed;
                 //System.out.println("Displacement rate: "+displacement_rate);
                 paralaxDisplacement = paralaxDisplacement - displacement_rate;
-                if (secondary_drawer_displacement<0) secondary_drawer_displacement = secondary_drawer_displacement - displacement_rate;
+                secondary_drawer_displacement = secondary_drawer_displacement - displacement_rate;
                 lastParalaxDisplacement = ctime;
             }
             else  {
                 float displacement_rate = displacement*50/(float)speed;
                 paralaxDisplacement = paralaxDisplacement - displacement_rate;
-                if (secondary_drawer_displacement<0) secondary_drawer_displacement = secondary_drawer_displacement - displacement_rate;
+                secondary_drawer_displacement = secondary_drawer_displacement - displacement_rate;
             }
 
-            if ((paralaxDisplacement <= (-(scx*lineSize*2f)+2f+scx))) {
+            if ((paralaxDisplacement <= (-(scx*lineSize*2f)+2f+scx)) && (paralaxDisplacement < 0)) {
                 System.out.println("TRIGGER! "+paralaxDisplacement);
                 System.out.println(" "+(-(scx*lineSize*2f)+2f+scx));
                 System.out.println(" "+(-scx*lineSize*2f+2f+scx));
                 secondary_drawer_displacement = -scx*lineSize*2f+2f+scx;
                 paralaxDisplacement = 2f+scx;
             }
-            if (paralaxDisplacement > 99) {
+            if (secondary_drawer_displacement > 0) {
                 System.out.println("TRIGGER 2! "+paralaxDisplacement);
-                System.out.println(" "+((scx*lineSize*2f)+2f+scx));
-                secondary_drawer_displacement = 0;
+                secondary_drawer_displacement = -2.5f;
                 paralaxDisplacement = 0;
             }
             if (lineSize == 9) System.out.println("displaced "+paralaxDisplacement);
