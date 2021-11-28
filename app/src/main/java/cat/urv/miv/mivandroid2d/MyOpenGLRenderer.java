@@ -5,9 +5,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.GLU;
-
-import org.w3c.dom.Text;
 
 public class MyOpenGLRenderer implements Renderer {
 	// Practica 2
@@ -15,15 +12,12 @@ public class MyOpenGLRenderer implements Renderer {
 	private AnimationManager mario_character;
 
 	private TileMap tm1, tm4, tm5, tm6;
-	private final float speed_scalation = 2;
 
 	private SimpleHUD hud;
 
 	// Practica 2
 
-	private int angle = 0;
-
-	private Context context;
+	private final Context context;
 
 	public MyOpenGLRenderer(Context context){
 		this.context = context;
@@ -42,12 +36,13 @@ public class MyOpenGLRenderer implements Renderer {
 		mario_square.getAnimation().activate_touches();
 
 		// Background
-		tm1 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap1, 300/speed_scalation);
-		tm4 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap2, 200f/speed_scalation);
-		tm5 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap3, 150f/speed_scalation);
-		tm6 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap4, 30f/speed_scalation);
+		float speed_scalation = 2;
+		tm1 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap1, 300/ speed_scalation);
+		tm4 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap2, 200f/ speed_scalation);
+		tm5 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap3, 150f/ speed_scalation);
+		tm6 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap4, 30f/ speed_scalation);
 
-		hud = new SimpleHUD(context, gl, R.drawable.mario_title, R.raw.font_white, R.drawable.font_white);
+		hud = new SimpleHUD(context, gl, R.raw.font_white, R.drawable.font_white);
 	}
 
 	@Override

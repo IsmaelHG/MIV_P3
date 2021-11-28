@@ -14,22 +14,12 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class AnimationManager {
 
-    private GL10 gl;
-    private Context context;
-    private int image_id;
-    private int text_id;
-    private Texture texture;
-
-    private HashMap<String, Animation> animations;
+    private final HashMap<String, Animation> animations;
 
 
     public AnimationManager(GL10 gl, Context context, int image_id, int text_id) {
-        this.gl = gl;
-        this.context = context;
-        this.image_id = image_id;
-        this.text_id = text_id;
 
-        this.texture = new Texture(this.gl, this.context, this.image_id);
+        Texture texture = new Texture(gl, context, image_id);
         this.animations = new HashMap<>();
         /* Code from texture atlas but creating new animation for each name */
 
@@ -53,7 +43,7 @@ public class AnimationManager {
 
                     // Add animation if it does not exist.
                     if (!animations.containsKey(parts[0])) {
-                        animations.put(parts[0], new Animation(this.gl, this.context, this.texture, parts[0], LOOP_TYPES.SWEPT));
+                        animations.put(parts[0], new Animation(texture, parts[0], LOOP_TYPES.SWEPT));
                     }
                     float[] coordinates = {
                             Float.parseFloat(parts[2]) / width, 1 - (Float.parseFloat(parts[3])) / height, //B

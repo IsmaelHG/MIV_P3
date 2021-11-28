@@ -8,17 +8,13 @@ import java.nio.ShortBuffer;
 import javax.microedition.khronos.opengles.GL10;
 
 public class Square {
-	private float vertices[] = {-1.0f, -1.0f, 0.0f, //lower left
-			-1.0f,  1.0f, 0.0f, //upper left
-			1.0f,  1.0f, 0.0f, //upper right
-			1.0f, -1.0f, 0.0f}; //lower right
-	private short faces[] = { 0, 1, 2, 0, 2, 3 };
+	private final short[] faces = { 0, 1, 2, 0, 2, 3 };
 
 	// Our vertex buffer.
-	private FloatBuffer vertexBuffer;
+	private final FloatBuffer vertexBuffer;
 
 	// Our index buffer.
-	private ShortBuffer indexBuffer;
+	private final ShortBuffer indexBuffer;
 
 	// Our color buffer.
 	private FloatBuffer colorBuffer;
@@ -36,6 +32,14 @@ public class Square {
 
 	public Square() {
 		//Move the vertices list into a buffer
+		//lower left
+		//upper left
+		//upper right
+		//lower right
+		float[] vertices = {-1.0f, -1.0f, 0.0f, //lower left
+				-1.0f, 1.0f, 0.0f, //upper left
+				1.0f, 1.0f, 0.0f, //upper right
+				1.0f, -1.0f, 0.0f};
 		ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
 		vbb.order(ByteOrder.nativeOrder());
 		vertexBuffer = vbb.asFloatBuffer();
@@ -49,9 +53,6 @@ public class Square {
 		indexBuffer.put(faces);
 		indexBuffer.position(0);
 	}
-
-	//public void setColor(float r, float g, float b) {
-	//}
 
 	public void setColor(float []colors) {
 		//Move the color list into a buffer

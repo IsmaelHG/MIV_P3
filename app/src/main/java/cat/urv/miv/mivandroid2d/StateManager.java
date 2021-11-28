@@ -13,23 +13,6 @@ public class StateManager {
 
     public static void update_touches(Square character, AnimationManager character_animation){
         float t = System.nanoTime();
-        //System.out.println(t);
-        //System.out.println("displacement before: "+displacement);
-        /*
-        if ((t-lastupdate)>=speed && touch_counter>0) {
-            lastupdate=t;
-            float rt = touch_counter/150;
-            touch_counter = 0;
-            //System.out.println("Got "+rt);
-            displacement = rt;
-        }
-        else {
-            //Progressive slow down
-            displacement -= 0.00005;
-            //if (displacement<0) displacement = 0;
-        }
-        */
-        //System.out.println("displacement after: "+displacement);
 
         if ((t-lastupdate)>=speed && touch_counter>0) {
             lastupdate=t;

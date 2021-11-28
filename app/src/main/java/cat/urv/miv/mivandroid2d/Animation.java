@@ -1,37 +1,25 @@
 package cat.urv.miv.mivandroid2d;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 
-import javax.microedition.khronos.opengles.GL10;
 
-
-enum LOOP_TYPES {SWEPT, PINGPONG};
+enum LOOP_TYPES {SWEPT, PINGPONG}
 
 public class Animation {
 
     static double DEFAULT_SPEED=50;
 
-    private GL10 gl;
-    private Context context;
-    private int image_id;
-    private int text_id;
-    private String name;
-    private ArrayList<float[]> frames = new ArrayList<>();
-    private double speed;
+    private final String name;
+    private final ArrayList<float[]> frames = new ArrayList<>();
+    private final double speed;
     private int numFrames;
     private int currentFrame;
-    private LOOP_TYPES loop;
+    private final LOOP_TYPES loop;
     private long lastupdate;
-    private Texture texture;
+    private final Texture texture;
 
 
-    public Animation  (GL10 gl, Context context, Texture text, String name, LOOP_TYPES l){
-        this.gl = gl;
-        this.context = context;
-        this.image_id = image_id;
-        this.text_id = text_id;
+    public Animation  (Texture text, String name, LOOP_TYPES l){
         this.name = name;
         this.loop = l;
         this.numFrames=0;
@@ -82,32 +70,8 @@ public class Animation {
         }
     }
 
-    public double getSpeed() {
-        return speed;
-    }
-
-    public LOOP_TYPES getLoop() {
-        return loop;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    public void setLoop(LOOP_TYPES loop) {
-        this.loop = loop;
-    }
-
     public Texture getTexture() {
         return texture;
-    }
-
-    public void setTexture(Texture texture) {
-        this.texture = texture;
-    }
-
-    public ArrayList<float[]> getFrames() {
-        return frames;
     }
 
     public String toString(){

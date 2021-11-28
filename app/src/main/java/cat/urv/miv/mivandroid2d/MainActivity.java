@@ -1,7 +1,6 @@
 package cat.urv.miv.mivandroid2d;
 
 import android.app.Activity;
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
 public class MainActivity extends Activity {

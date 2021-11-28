@@ -1,18 +1,20 @@
 package cat.urv.miv.mivandroid2d;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
 public class MyGLSurfaceView extends GLSurfaceView {
     private MyOpenGLRenderer mRenderer;
-    private int x_res;
+    private final int x_res;
 
     public MyGLSurfaceView(Context context) {
         super(context);
         this.x_res = this.getResources().getDisplayMetrics().widthPixels;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event != null) {
@@ -21,17 +23,14 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 if (mRenderer != null) {
                     // Ensure we call switchMode() on the OpenGL thread.
                     // queueEvent() is a method of GLSurfaceView that will do this for us.
-                    queueEvent(new Runnable() {
-                        @Override
-                        public void run() {
-                            int x = (int)event.getX();
-                            if (x > x_res/2) {
-                                StateManager.displaceRight();
-                            } else {
-                                StateManager.displaceLeft();
-                            }
-                            StateManager.incrementTouches();
+                    queueEvent(() -> {
+                        int x = (int)event.getX();
+                        if (x > x_res/2) {
+                            StateManager.displaceRight();
+                        } else {
+                            StateManager.displaceLeft();
                         }
+                        StateManager.incrementTouches();
                     });
                 }
             }

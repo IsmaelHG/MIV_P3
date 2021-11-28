@@ -13,29 +13,18 @@ import javax.microedition.khronos.opengles.GL11;
 
 public class TileMap {
 
-    static double DEFAULT_SPEED=100;
-
-    private GL10 gl;
-    private Context context;
-    private int image_id;
-    private int text_id;
-    private int tileWidth;
-    private int tileHeight;
+    private final GL10 gl;
+    private final Context context;
+    private final int image_id;
+    private final int text_id;
     private int lineNumber;
     private int lineSize;
-    private String name;
     private Square[][] tilemap;
 
     // Atributes for paralax
-    private double speed;
+    private final double speed;
     private float paralaxDisplacement=0;
     private double lastParalaxDisplacement;
-
-    private int numFrames;
-    private int currentFrame;
-    private LOOP_TYPES loop;
-    private long lastupdate;
-    private Texture texture;
 
     public TileMap(GL10 gl, Context context, int image_id, int text_id, double speed){
         this.gl = gl;
@@ -52,7 +41,7 @@ public class TileMap {
 
     public void readTileMapData () {
 
-        this.texture = new Texture(this.gl, this.context, this.image_id);
+        Texture texture = new Texture(this.gl, this.context, this.image_id);
         /* Get the size of the image.
          */
         Bitmap mBitmap = BitmapFactory.decodeResource(context.getResources(), image_id);
@@ -70,9 +59,9 @@ public class TileMap {
             // Extract tile size.
             line = tilemapData.readLine();
             String[] parts = line.split("\\s+");
-            tileWidth = Integer.parseInt(parts[0]);
-            tileHeight = Integer.parseInt(parts[1]);
-            int tilesPerRow = width/tileWidth;
+            int tileWidth = Integer.parseInt(parts[0]);
+            int tileHeight = Integer.parseInt(parts[1]);
+            int tilesPerRow = width/ tileWidth;
             line = tilemapData.readLine();
             parts = line.split("\\s+");
             lineSize = Integer.parseInt(parts[0]);
@@ -89,10 +78,10 @@ public class TileMap {
                     int row = number/tilesPerRow;
                     int column = number % tilesPerRow;
                     tilemap[i][j] = new Square();
-                    float[] coords = new float [] { column*tileWidth/(float)width, ((row+1)*tileHeight-1)/(float)height,
-                            column*tileWidth/(float)width, ((row)*tileHeight)/(float)height,
-                            ((column+1)*tileWidth-1)/(float)width, ((row)*tileHeight)/(float)height,
-                            ((column+1)*tileWidth-1)/(float)width, ((row+1)*tileHeight-1)/(float)height};
+                    float[] coords = new float [] { column* tileWidth /(float)width, ((row+1)* tileHeight -1)/(float)height,
+                            column* tileWidth /(float)width, ((row)* tileHeight)/(float)height,
+                            ((column+1)* tileWidth -1)/(float)width, ((row)* tileHeight)/(float)height,
+                            ((column+1)* tileWidth -1)/(float)width, ((row+1)* tileHeight -1)/(float)height};
                     tilemap[i][j].setTexture(coords, texture);
 
                 }
@@ -118,10 +107,8 @@ public class TileMap {
     }
 
     public void draw(float z){
-        this.scx = scx;
-        this.scy = scy;
 
-        int viewport[] = new int[4];
+        int[] viewport = new int[4];
         gl.glGetIntegerv(GL11.GL_VIEWPORT, viewport, 0);
         vwidth =viewport[2];
         gl.glPushMatrix();
@@ -150,15 +137,12 @@ public class TileMap {
             gl.glTranslatef(0,-2,0);
         }
         gl.glPopMatrix();
-        //if (secondary_drawer_displacement<-scx*lineSize*2) secondary_drawer_displacement=1;
-        //if (secondary_drawer_displacement>(scx*lineSize*2)) secondary_drawer_displacement=1;
     }
-
-    private float base_displacement = 0.0f;
 
     public void update(double ctime, boolean touches){
 
         // Update only based in time
+        float base_displacement = 0.0f;
         if (!touches) {
             if ((ctime - lastParalaxDisplacement) > speed) {
                 paralaxDisplacement = paralaxDisplacement - base_displacement;

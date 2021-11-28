@@ -13,8 +13,8 @@ import java.util.List;
 
 public class XMLBitmapFontManager {
 
-    private Context context;
-    private String ns = null;
+    private final Context context;
+    private final String ns = null;
 
     public XMLBitmapFontManager(Context context){
         this.context = context;

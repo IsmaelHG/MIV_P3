@@ -12,16 +12,17 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class Texture {
 
-    private int[] texture=new int[1];
+    private final int[] texture=new int[1];
 
-    private int width, height;
+    private final int width;
+    private final int height;
 
     public Texture(GL10 gl, Context context, int resource_id) {
 
         //Get the texture from the Android resource directory
 
         InputStream is = context.getResources().openRawResource(resource_id);
-        Bitmap bitmap = null;
+        Bitmap bitmap;
 
         try {
             //BitmapFactory is an Android graphics utility for images
@@ -31,8 +32,7 @@ public class Texture {
             //Always clear and close
             try {
                 is.close();
-                is = null;
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
         }
 

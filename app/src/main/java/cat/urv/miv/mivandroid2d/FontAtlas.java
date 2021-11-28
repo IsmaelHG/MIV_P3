@@ -14,37 +14,30 @@ import javax.microedition.khronos.opengles.GL10;
 public class FontAtlas {
 
     private final int max_characters = 200;
-    private XMLBitmapFontManager xbf_mng;
-    private Context context;
-    private List<FontData> font_info;
-    private Square[] font_string = new Square [max_characters];
-    private int image_width;
-    private int image_height;
-    private Map<Character, float[]> letter_coordinates;
-    private Map<Character, FontData> letter_data;
+    private final Square[] font_string = new Square [max_characters];
+    private final Map<Character, float[]> letter_coordinates;
     private int started_squares = 0;
-    private Texture fonts_texture;
-    private GL10 gl;
+    private final Texture fonts_texture;
+    private final GL10 gl;
 
 
     public FontAtlas(Context context, GL10 gl, int text_id, int image_id){
-        this.context=context;
         this.gl = gl;
-        xbf_mng = new XMLBitmapFontManager(context);
+        XMLBitmapFontManager xbf_mng = new XMLBitmapFontManager(context);
         // Read coordinates' xml
-        this.font_info = xbf_mng.parse(text_id);
+        List<FontData> font_info = xbf_mng.parse(text_id);
 
         InputStream is = context.getResources().openRawResource(image_id);
         Bitmap mBitmap = BitmapFactory.decodeStream(is);
-        image_height = mBitmap.getHeight();
-        image_width = mBitmap.getWidth();
+        int image_height = mBitmap.getHeight();
+        int image_width = mBitmap.getWidth();
 
         letter_coordinates = new HashMap<>();
-        letter_data = new HashMap<>();
+        Map<Character, FontData> letter_data = new HashMap<>();
 
         // Save each character's coordinates
         for (FontData fd : font_info) {
-            float coordinates[] = new float[]{
+            float[] coordinates = new float[]{
                     fd.getX() / (float) image_width, (fd.getY() + fd.getHeight()) / (float) image_height,
                     fd.getX() / (float) image_width, (fd.getY()) / (float) image_height,
                     (fd.getX() + fd.getWidth()) / (float) image_width, (fd.getY()) / (float) image_height,
