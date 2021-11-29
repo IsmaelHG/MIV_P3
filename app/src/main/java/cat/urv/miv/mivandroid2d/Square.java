@@ -31,14 +31,9 @@ public class Square {
 	private boolean textureEnabled = false;
 
 	public Square() {
-		//Move the vertices list into a buffer
-		//lower left
-		//upper left
-		//upper right
-		//lower right
-		float[] vertices = {-1.0f, -1.0f, 0.0f, //lower left
-				-1.0f, 1.0f, 0.0f, //upper left
-				1.0f, 1.0f, 0.0f, //upper right
+		float[] vertices = {-1.0f, -1.0f, 0.0f,
+				-1.0f, 1.0f, 0.0f,
+				1.0f, 1.0f, 0.0f,
 				1.0f, -1.0f, 0.0f};
 		ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
 		vbb.order(ByteOrder.nativeOrder());

@@ -8,7 +8,9 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MyGLSurfaceView view = new MyGLSurfaceView(this);
+        //
+        MyOpenGLSurfaceView view = new MyOpenGLSurfaceView(this);
+        //
         view.setRenderer(new MyOpenGLRenderer(this));
         setContentView(view);
     }

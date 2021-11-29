@@ -23,7 +23,7 @@ public class TileMap {
 
     // Atributes for paralax
     private final double speed;
-    private float paralaxDisplacement=0;
+    private double paralaxDisplacement=0;
     private double lastParalaxDisplacement;
 
     public TileMap(GL10 gl, Context context, int image_id, int text_id, double speed){
@@ -97,7 +97,7 @@ public class TileMap {
     float scy;
     float displx;
     float disply;
-    private float secondary_drawer_displacement = 1;
+    private double secondary_drawer_displacement = 1;
 
     public void setDimensions(float displx, float disply, float scx, float scy){
         this.scx = scx;
@@ -112,7 +112,7 @@ public class TileMap {
         gl.glGetIntegerv(GL11.GL_VIEWPORT, viewport, 0);
         vwidth =viewport[2];
         gl.glPushMatrix();
-        gl.glTranslatef(displx+paralaxDisplacement,disply,z);
+        gl.glTranslatef((float) (displx+paralaxDisplacement),disply,z);
         gl.glScalef(scx, scy, 0);
         for (int i=0; i<lineNumber; i++){
             gl.glPushMatrix();
@@ -125,7 +125,7 @@ public class TileMap {
         }
         gl.glPopMatrix();
         gl.glPushMatrix();
-        gl.glTranslatef(displx+secondary_drawer_displacement,disply,z);
+        gl.glTranslatef((float) (displx+secondary_drawer_displacement),disply,z);
         gl.glScalef(scx, scy, 0);
         for (int i=0; i<lineNumber; i++){
             gl.glPushMatrix();
@@ -151,17 +151,17 @@ public class TileMap {
             if (paralaxDisplacement == -2 * lineSize) paralaxDisplacement = 0;
         }
         else {
-            float displacement = StateManager.getDisplacement();
+            double displacement = StateManager.getDisplacement();
             //System.out.println(displacement+"displacement");
             if ((ctime - lastParalaxDisplacement) > speed) {
-                float displacement_rate = base_displacement + displacement*50/(float)speed;
+                double displacement_rate = base_displacement + displacement*50/(float)speed;
                 //System.out.println("Displacement rate: "+displacement_rate);
                 paralaxDisplacement = paralaxDisplacement - displacement_rate;
                 secondary_drawer_displacement = secondary_drawer_displacement - displacement_rate;
                 lastParalaxDisplacement = ctime;
             }
             else  {
-                float displacement_rate = displacement*50/(float)speed;
+                double displacement_rate = displacement*50/(float)speed;
                 paralaxDisplacement = paralaxDisplacement - displacement_rate;
                 secondary_drawer_displacement = secondary_drawer_displacement - displacement_rate;
             }

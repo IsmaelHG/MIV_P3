@@ -13,8 +13,6 @@ public class MyOpenGLRenderer implements Renderer {
 
 	private TileMap tm1, tm4, tm5, tm6;
 
-	private SimpleHUD hud;
-
 	// Practica 2
 
 	private final Context context;
@@ -41,8 +39,6 @@ public class MyOpenGLRenderer implements Renderer {
 		tm4 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap2, 200f/ speed_scalation);
 		tm5 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap3, 150f/ speed_scalation);
 		tm6 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap4, 30f/ speed_scalation);
-
-		hud = new SimpleHUD(context, gl, R.raw.font_white, R.drawable.font_white);
 	}
 
 	@Override
@@ -72,9 +68,6 @@ public class MyOpenGLRenderer implements Renderer {
 		tm6.draw(0f);
 
 		drawCharacters(gl);
-
-		// HUD
-		hud.draw(gl);
 	}
 
 	float displacement = 0;
