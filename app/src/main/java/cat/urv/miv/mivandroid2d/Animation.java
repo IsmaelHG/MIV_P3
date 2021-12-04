@@ -2,27 +2,19 @@ package cat.urv.miv.mivandroid2d;
 
 import java.util.ArrayList;
 
-
-enum LOOP_TYPES {SWEPT, PINGPONG}
-
 public class Animation {
 
     static double DEFAULT_SPEED=50;
 
-    private final String name;
     private final ArrayList<float[]> frames = new ArrayList<>();
     private final double speed;
-    private int numFrames;
+    private int numFrames=0;
     private int currentFrame;
-    private final LOOP_TYPES loop;
     private long lastupdate;
-    private final Texture texture;
+    private final TextureAtlas texture;
 
 
-    public Animation  (Texture text, String name, LOOP_TYPES l){
-        this.name = name;
-        this.loop = l;
-        this.numFrames=0;
+    public Animation(TextureAtlas text){
         this.texture = text;
         this.speed=DEFAULT_SPEED;
         this.lastupdate = System.currentTimeMillis();
@@ -44,44 +36,27 @@ public class Animation {
     }
 
     public float[] nextFrame(){
-        switch (loop){
-            case SWEPT: currentFrame = (currentFrame + 1)%numFrames; break;
-            case PINGPONG: if (++currentFrame==numFrames) currentFrame=0; break;
-        }
+        currentFrame = (currentFrame + 1)%numFrames;
         return frames.get(currentFrame);
     }
 
     public float displacement_to_speed_factor = 1E4f;
     public boolean touches_active = false;
 
-    public void activate_touches() {touches_active=true;}
+    public void enable_touches() {touches_active=true;}
 
-    public void supress_touches() {touches_active=false;}
+    public void disable_touches() {touches_active=false;}
 
     public void update(Long t){
         if ((t-lastupdate)>=(touches_active
                 ?speed-StateManager.getDisplacement()*displacement_to_speed_factor
                 :speed)) {
             lastupdate=t;
-            switch (loop){
-                case SWEPT: currentFrame = (currentFrame + 1)%numFrames; break;
-                case PINGPONG: if (++currentFrame==numFrames) currentFrame=0; break;
-            }
+            currentFrame = (currentFrame + 1)%numFrames;
         }
     }
 
-    public Texture getTexture() {
+    public TextureAtlas getTexture() {
         return texture;
-    }
-
-    public String toString(){
-        String ret = "Name: "+this.name+"\n";
-        for (float[] f : frames){
-            for (float c : f) {
-                ret=ret+" " + c;
-            }
-            ret = ret + "\n";
-        }
-        return ret;
     }
 }

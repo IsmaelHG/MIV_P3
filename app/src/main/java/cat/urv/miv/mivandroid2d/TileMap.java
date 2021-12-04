@@ -41,7 +41,7 @@ public class TileMap {
 
     public void readTileMapData () {
 
-        Texture texture = new Texture(this.gl, this.context, this.image_id);
+        TextureAtlas texture = new TextureAtlas(this.gl, this.context, this.image_id);
         /* Get the size of the image.
          */
         Bitmap mBitmap = BitmapFactory.decodeResource(context.getResources(), image_id);

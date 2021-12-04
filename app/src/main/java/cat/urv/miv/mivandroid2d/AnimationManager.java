@@ -19,7 +19,7 @@ public class AnimationManager {
 
     public AnimationManager(GL10 gl, Context context, int image_id, int text_id) {
 
-        Texture texture = new Texture(gl, context, image_id);
+        TextureAtlas texture = new TextureAtlas(gl, context, image_id);
         this.animations = new HashMap<>();
         /* Code from texture atlas but creating new animation for each name */
 
@@ -43,7 +43,7 @@ public class AnimationManager {
 
                     // Add animation if it does not exist.
                     if (!animations.containsKey(parts[0])) {
-                        animations.put(parts[0], new Animation(texture, parts[0], LOOP_TYPES.SWEPT));
+                        animations.put(parts[0], new Animation(texture));
                     }
                     float[] coordinates = {
                             Float.parseFloat(parts[2]) / width, 1 - (Float.parseFloat(parts[3])) / height, //B

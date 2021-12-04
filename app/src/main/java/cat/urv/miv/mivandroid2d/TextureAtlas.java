@@ -10,17 +10,16 @@ import java.io.InputStream;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class Texture {
+public class TextureAtlas {
 
     private final int[] texture=new int[1];
 
     private final int width;
     private final int height;
 
-    public Texture(GL10 gl, Context context, int resource_id) {
+    public TextureAtlas(GL10 gl, Context context, int resource_id) {
 
-        //Get the texture from the Android resource directory
-
+        // Se consigue la textura de la carpeta resource
         InputStream is = context.getResources().openRawResource(resource_id);
         Bitmap bitmap;
 

@@ -22,23 +22,19 @@ public class MyOpenGLRenderer implements Renderer {
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		// Image Background color
-		//gl.glClearColor(1.0f, 1.0f, 1.0f, 0.5f);
-
 		// Practica 2
 		gl.glEnable(GL10.GL_TEXTURE_2D);
 
 		mario_square = new Square();
 		mario_character = new AnimationManager(gl, context, R.drawable.mario, R.raw.mario);
 		mario_square.setAnimation(mario_character.getAnimation("idle"));
-		mario_square.getAnimation().activate_touches();
+		mario_square.getAnimation().enable_touches();
 
 		// Background
-		float speed_scalation = 2;
-		tm1 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap1, 300/ speed_scalation);
-		tm4 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap2, 200f/ speed_scalation);
-		tm5 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap3, 150f/ speed_scalation);
-		tm6 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap4, 30f/ speed_scalation);
+		tm1 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap1, 150);
+		tm4 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap2, 100);
+		tm5 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap3, 75);
+		tm6 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap4, 15);
 	}
 
 	@Override

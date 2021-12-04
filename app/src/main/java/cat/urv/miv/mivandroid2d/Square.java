@@ -22,7 +22,7 @@ public class Square {
 	// Our texCoord buffer.
 	private FloatBuffer texCoordBuffer;
 
-	private Texture texture;
+	private TextureAtlas texture;
 
 	private Animation animation;
 
@@ -66,7 +66,7 @@ public class Square {
 	public void enableTexture() { textureEnabled = true; }
 	public void disableTexture() { textureEnabled = false; }
 
-	public void setTexture(float []textcoords, Texture texture) {
+	public void setTexture(float []textcoords, TextureAtlas texture) {
 		this.texture = texture;
 
 		ByteBuffer vbb = ByteBuffer.allocateDirect(textcoords.length * 4);
