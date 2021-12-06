@@ -32,12 +32,12 @@ public class StateManager {
         else {
             // Si no han habido nuevos toques, el sprite reducira su velocidad hasta pararse
             if (touch_left) {
-                displacement += 0.0001;
+                displacement += 0.00003;
                 // Cuando el sprite se haya "parado", mostraremos su animación idle
                 if (displacement>=0) {displacement = 0; character.setAnimation(character_animation.getAnimation("idle"));}
             }
             if (touch_right) {
-                displacement -= 0.0001;
+                displacement -= 0.00003;
                 if (displacement<=0) {displacement = 0; character.setAnimation(character_animation.getAnimation("idle"));}
             }
         }
