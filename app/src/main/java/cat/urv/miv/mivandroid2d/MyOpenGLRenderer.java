@@ -11,7 +11,7 @@ public class MyOpenGLRenderer implements Renderer {
 	private Square mario_square;
 	private AnimationManager mario_character;
 
-	private TileMap tm1, tm4, tm5, tm6;
+	private TileMap map1, map2, map3, map4, map5;
 
 	// Practica 2
 
@@ -30,10 +30,13 @@ public class MyOpenGLRenderer implements Renderer {
 		mario_square.setAnimation(mario_character.getAnimation("idle"));
 
 		// Background
-		tm1 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap1, 150);
-		tm4 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap2, 100);
-		tm5 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap3, 75);
-		tm6 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap4, 15);
+		map1 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap1, 150);
+		map2 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap2, 100);
+		map3 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap3, 75);
+		map4 = new TileMap (gl, context, R.drawable.background_tiles, R.raw.tilemap4, 15);
+
+		map5 = new TileMap (gl, context, R.drawable.foreground_tiles, R.raw.tilemap5, 15);
+
 	}
 
 	@Override
@@ -46,21 +49,25 @@ public class MyOpenGLRenderer implements Renderer {
 		gl.glLoadIdentity();
 
 		// Background
-		tm1.setDimensions(-1f, 0.8f, 0.2f, 0.2f);
-		tm1.update(System.currentTimeMillis(), true);
-		tm1.draw(0f);
+		map1.setDimensions(-1f, 0.8f, 0.2f, 0.2f);
+		map1.update(System.currentTimeMillis(), true);
+		map1.draw(0f);
 
-		tm4.setDimensions( -1f, 0.47f, 0.13f, 0.13f);
-		tm4.update(System.currentTimeMillis(), true);
-		tm4.draw(0f);
+		map2.setDimensions( -1f, 0.47f, 0.13f, 0.13f);
+		map2.update(System.currentTimeMillis(), true);
+		map2.draw(0f);
 
-		tm5.setDimensions( -1f, -0.09f, 0.17f, 0.17f);
-		tm5.update(System.currentTimeMillis(), true);
-		tm5.draw(0f);
+		map3.setDimensions( -1f, -0.09f, 0.17f, 0.17f);
+		map3.update(System.currentTimeMillis(), true);
+		map3.draw(0f);
 
-		tm6.setDimensions( -1f, -0.09f, 0.17f, 0.17f);
-		tm6.update(System.currentTimeMillis(), true);
-		tm6.draw(0f);
+		map4.setDimensions( -1f, 0.2f, 0.17f, 0.17f);
+		map4.update(System.currentTimeMillis(), true);
+		map4.draw(0f);
+
+		map5.setDimensions( -1f, -0.9f, 0.3f, 0.1f);
+		map5.update(System.currentTimeMillis(), true);
+		map5.draw(0f);
 
 		drawCharacters(gl);
 	}
@@ -73,7 +80,7 @@ public class MyOpenGLRenderer implements Renderer {
 		gl.glTranslatef(-0.4f+displacement, -0.7f, 0.0f);
 		gl.glScalef(-0.3f, 0.3f, 0.01f);
 
-		gl.glTranslatef(-2f-displacement, 0, 0);
+		gl.glTranslatef(-2f-displacement, 0.6f, 0);
 		mario_square.update(System.currentTimeMillis());
 		mario_square.draw(gl);
 		gl.glPopMatrix();

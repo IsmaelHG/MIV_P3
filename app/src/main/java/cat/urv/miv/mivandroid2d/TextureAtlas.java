@@ -12,10 +12,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class TextureAtlas {
 
+    // Texture pointer
     private final int[] texture=new int[1];
-
-    private final int width;
-    private final int height;
 
     public TextureAtlas(GL10 gl, Context context, int resource_id) {
 
@@ -49,19 +47,8 @@ public class TextureAtlas {
 
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D,0,bitmap,0);
 
-        this.width = bitmap.getWidth();
-        this.height = bitmap.getHeight();
-
         //Clean up
         bitmap.recycle();
-    }
-
-    public int getWidht() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public int[] getTexture() {

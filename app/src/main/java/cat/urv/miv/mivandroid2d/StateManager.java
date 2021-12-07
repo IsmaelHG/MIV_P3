@@ -16,16 +16,16 @@ public class StateManager {
 
         if ((t-lastupdate)>=speed && touchCount >0) {
             lastupdate=t;
-            double rt = touchCount/150;
+            double movement = touchCount/150;
             touchCount = 0;
 
             // Cuando se toque la pantalla, el sprite tendra una animación y se desplazara al lado seleccionado.
             if (touch_left) {
-                displacement = -rt;
+                displacement = -movement;
                 character.setAnimation(character_animation.getAnimation("walk"));
             }
             if (touch_right) {
-                displacement = rt;
+                displacement = movement;
                 character.setAnimation(character_animation.getAnimation("walk"));
             }
         }
@@ -48,7 +48,6 @@ public class StateManager {
     }
 
     public static void incrementTouches(){
-
         touchCount++;
         touchTotal++;
     }
@@ -61,9 +60,5 @@ public class StateManager {
     public static void moveRight() {
         touch_left = false;
         touch_right = true;
-    }
-
-    public static float getTouchTotal() {
-        return touchTotal;
     }
 }

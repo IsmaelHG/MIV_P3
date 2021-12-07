@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -19,9 +20,10 @@ public class TileMap {
     private final int text_id;
     private int lineNumber;
     private int lineSize;
+    // Mapa de baldosas
     private Square[][] tilemap;
 
-    // Atributes for paralax
+    // Parallax displacement
     private final double speed;
     private double paralaxDisplacement=0;
     private double lastParalaxDisplacement;
@@ -56,12 +58,15 @@ public class TileMap {
         String line;
         try {
 
-            // Extract tile size.
+            // La primera linea del fichero contiene la altura/anchura de la baldosa
             line = tilemapData.readLine();
             String[] parts = line.split("\\s+");
             int tileWidth = Integer.parseInt(parts[0]);
             int tileHeight = Integer.parseInt(parts[1]);
-            int tilesPerRow = width/ tileWidth;
+            // Numero maximo de baldosas que se pueden mostrar horizontalmente en pantalla
+            int Rows = width/ tileWidth;
+
+            // La segunda contiene el tamaño del tilemap
             line = tilemapData.readLine();
             parts = line.split("\\s+");
             lineSize = Integer.parseInt(parts[0]);
@@ -74,20 +79,23 @@ public class TileMap {
                 for (int j = 0; j<lineSize; j++) {
                     int number = Integer.parseInt(parts[j]);
 
-                    // Get tile position
-                    int row = number/tilesPerRow;
-                    int column = number % tilesPerRow;
-                    tilemap[i][j] = new Square();
-                    float[] coords = new float [] { column* tileWidth /(float)width, ((row+1)* tileHeight -1)/(float)height,
+                    // Obtenemos la posición en pantalla
+                    int row = number/Rows;
+                    int column = number % Rows;
+
+                    // Coordenadas textura tile
+                    float[] coordinates = new float [] { column* tileWidth /(float)width, ((row+1)* tileHeight -1)/(float)height,
                             column* tileWidth /(float)width, ((row)* tileHeight)/(float)height,
                             ((column+1)* tileWidth -1)/(float)width, ((row)* tileHeight)/(float)height,
                             ((column+1)* tileWidth -1)/(float)width, ((row+1)* tileHeight -1)/(float)height};
-                    tilemap[i][j].setTexture(coords, texture);
+                    // Insertamos la textura
+                    tilemap[i][j] = new Square();
+                    tilemap[i][j].setTexture(coordinates, texture);
 
                 }
             }
-        } catch (java.io.IOException ioe) {
-            System.out.println("ERROR :: Reading tilemap text file.");
+        } catch (IOException e) {
+            System.out.println("No se puede leer el fichero de animaciones");
         }
     }
 
