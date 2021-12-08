@@ -6,13 +6,11 @@ import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
 /**
- *
  * Se extiende la clase GLSurfaceView para implementar el control tactil
- *
  */
 public class MyOpenGLSurfaceView extends GLSurfaceView {
-    private MyOpenGLRenderer mRenderer;
     private final int x_res;
+    private MyOpenGLRenderer mRenderer;
 
     public MyOpenGLSurfaceView(Context context) {
         super(context);
@@ -29,17 +27,17 @@ public class MyOpenGLSurfaceView extends GLSurfaceView {
                 if (mRenderer != null) {
                     queueEvent(() -> {
                         // Obtenemos la posición pulsada
-                        int x = (int)event.getX();
+                        int x = (int) event.getX();
 
-                        if (x > x_res/2) {
+                        if (x > x_res / 2) {
                             // Si se toca la parte derecha de la pantalla, el sprite se desplazara a ese lado
-                            StateManager.moveRight();
+                            SpriteManager.moveRight();
                         } else {
                             // Izquierda
-                            StateManager.moveLeft();
+                            SpriteManager.moveLeft();
                         }
 
-                        StateManager.incrementTouches();
+                        SpriteManager.incrementTouches();
                     });
                 }
             }

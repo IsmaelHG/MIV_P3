@@ -32,8 +32,8 @@ public class AnimationManager {
         InputStream tFile = context.getResources().openRawResource(text_id);
         BufferedReader atlasData = new BufferedReader(new InputStreamReader(tFile));
         try {
-            for (String line = atlasData.readLine(); line  != null; line = atlasData.readLine()) {
-                String [] coords = line.split(" ");
+            for (String line = atlasData.readLine(); line != null; line = atlasData.readLine()) {
+                String[] coords = line.split(" ");
                 if (coords.length == 6) {
 
                     if (!animations.containsKey(coords[0])) {
@@ -53,18 +53,17 @@ public class AnimationManager {
                     animations.get(coords[0]).addFrame(coordinates);
 
                 } else {
-                    System.out.println("La linea ' "+line+" ' "+"es incorrecta");
+                    System.out.println("La linea ' " + line + " ' " + "es incorrecta");
                 }
             }
 
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("No se puede leer el fichero de animaciones");
         }
 
     }
 
-    public Animation getAnimation(String name){
+    public Animation getAnimation(String name) {
         return animations.get(name);
     }
 

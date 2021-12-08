@@ -13,7 +13,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class TextureAtlas {
 
     // Texture pointer
-    private final int[] texture=new int[1];
+    private final int[] texture = new int[1];
 
     public TextureAtlas(GL10 gl, Context context, int resource_id) {
 
@@ -37,15 +37,15 @@ public class TextureAtlas {
         //AFEGIR CODi AQUI: CREAR TEXTURA I ASSIGNAR-LI LA IMATGE
         //Generate and fill the texture with the image
 
-        gl.glGenTextures(1,texture,0);
+        gl.glGenTextures(1, texture, 0);
         gl.glBindTexture(GL10.GL_TEXTURE_2D, texture[0]);
 
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D,GL10.GL_TEXTURE_MIN_FILTER,GL10.GL_NEAREST);
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D,GL10.GL_TEXTURE_MAG_FILTER,GL10.GL_NEAREST);
+        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
 
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D,GL10.GL_CLAMP_TO_EDGE,GL10.GL_REPEAT);
+        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_CLAMP_TO_EDGE, GL10.GL_REPEAT);
 
-        GLUtils.texImage2D(GL10.GL_TEXTURE_2D,0,bitmap,0);
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
 
         //Clean up
         bitmap.recycle();
