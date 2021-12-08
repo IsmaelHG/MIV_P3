@@ -59,24 +59,24 @@ public class TileMap {
 
             // La primera linea del fichero contiene la altura/anchura de la baldosa
             line = tilemapData.readLine();
-            String[] parts = line.split(" ");
-            int tileWidth = Integer.parseInt(parts[0]);
-            int tileHeight = Integer.parseInt(parts[1]);
+            String[] str = line.split(" ");
+            int tileWidth = Integer.parseInt(str[0]);
+            int tileHeight = Integer.parseInt(str[1]);
             // Numero maximo de baldosas que se pueden mostrar horizontalmente en pantalla
             int Rows = width / tileWidth;
 
             // La segunda contiene el tamaño del tilemap
             line = tilemapData.readLine();
-            parts = line.split(" ");
-            tileRows = Integer.parseInt(parts[0]);
-            tileCols = Integer.parseInt(parts[1]);
+            str = line.split(" ");
+            tileRows = Integer.parseInt(str[0]);
+            tileCols = Integer.parseInt(str[1]);
             tilemap = new Square[tileCols][tileRows];
 
             for (int i = 0; i < tileCols; i++) {
                 line = tilemapData.readLine();
-                parts = line.split(" ");
+                str = line.split(" ");
                 for (int j = 0; j < tileRows; j++) {
-                    int number = Integer.parseInt(parts[j]);
+                    int number = Integer.parseInt(str[j]);
 
                     // Obtenemos la posición en pantalla
                     int row = number / Rows;
